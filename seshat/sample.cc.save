@@ -28,8 +28,8 @@
 #include <queue>
 #include "sample.h"
 
-#include <xercesc/util/PlatformUtils.hpp>
-#include <xercesc/parsers/XercesDOMParser.hpp>
+#include <xercesc/src/xercesc/util/PlatformUtils.hpp>
+#include <xercesc/xercesc/parsers/XercesDOMParser.hpp>
 #include <xercesc/util/XMLUni.hpp>
 #include <xercesc/dom/DOM.hpp>
 #include <xercesc/dom/DOMDocument.hpp>
@@ -37,9 +37,9 @@
 #include <xercesc/dom/DOMElement.hpp>
 #include <xercesc/dom/DOMImplementation.hpp>
 #include <xercesc/dom/DOMImplementationLS.hpp>
-#include <xercesc/src/xercesc/dom/DOMNodeIterator.hpp>
-#include <xercesc/src/xercesc/dom/DOMNodeList.hpp>
-#include <xercesc/src/xercesc/dom/DOMText.hpp>
+#include <xercesc/dom/DOMNodeIterator.hpp>
+#include <xercesc/dom/DOMNodeList.hpp>
+#include <xercesc/dom/DOMText.hpp>
 
 #define PI 3.14159265
 
