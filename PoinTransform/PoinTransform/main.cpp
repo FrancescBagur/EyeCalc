@@ -2,19 +2,31 @@
 #include <cstdio>
 #include <fstream>
 #include <cstdlib>
+#include <cstring>
 
 using namespace std;
 
 int main (int argc, char *argv[]){
 	//Miro que m'hagin pasat un argument que es la imatge necessaria per fer funcionar el autotrace
+	std::string file;
 	if(argc!=2) {
 		//Si no l'han passat faig el print i surto del programa.
 		printf("Falta el parametre imatge.\n"); 
-		exit(1);
+		file="";
+		//exit(1);
+	}else{
+		file=argv[1];
 	}
 	//Si l'han passat executo l'autotrace amb el parametre imatge que m'han passat i envio el resultat a un fitxer de sortida
-	std::string file=argv[1];
-	system("./autotrace -centerline -color-count 2 " + file + " > fitxerSortida.txt");
+	const char * instruccio = "sh ../../../../autotrace-0.31.1/script.autotrace "; //Això es l'script a executar
+	const char * f = file.c_str();//El fitxer que m'an passat
+	char script[200];
+	strcpy(script, instruccio); 
+	if(f != ""){
+		strcat(script, f); 
+	}
+	//Executo l'script!
+	system("sh ../../../../autotrace-0.31.1/script.autotrace");
 	//Un cop tenim la sortida de l'autotrace dins el fitxer, es hora d'analitzarlo.
 	string linia;
   	ifstream fitxer("fitxerSortida.txt");
