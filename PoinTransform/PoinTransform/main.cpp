@@ -41,25 +41,31 @@ int main (int argc, char *argv[]){
   		int i=0,j=0,t=0;
 	    while (getline (fitxer,linia)){
 	    	if(t>=23){
-	    		if (linia.find("K") == std::string::npos || linia.find("u") == std::string::npos || linia.find("EOF") == std::string::npos){
+	    		if (linia.find("k") == std::string::npos || linia.find("u") == std::string::npos || linia.find("EOF") == std::string::npos){
 	    			//Ignoro les linies que no son de punts.
 	    			if(linia.find("S") == std::string::npos){
 	    				//Si no hi ha una S significa que son punts
 	    				vector <string> nombres;
-	    				//printf(linia.c_str());
-	    				split(nombres, linia, is_any_of( " " ));
+	    				printf("linia:\n");
+	    				printf(linia.c_str());
+	    				printf("\n");
+	    				split(nombres, linia, is_any_of("   "));
 	    				vector <int> numInt;
 	    				for(int k=0; k< nombres.size(); k++){
-	    					printf(nombres[k].c_str());
 	    					if(nombres[k] != "m" && nombres[k] != "l" && nombres[k] != "c"){
+	    						printf(nombres[k].c_str());
+	    						printf("-");
 	    						//si no es cap lletra es que es un numero, el passo a float per no perdre els desimals
-	    						float numFloat = 0;
-	    						sscanf(nombres[k].c_str(), "%f", &numFloat); //Passa la cadena a un float
-	    						numInt.push_back((int) numFloat); //El passo a integer
-	    						StrokesMatrix.push_back(numInt);
+	    						if(!nombres[k].compare("") == 0){
+		    						float numFloat = 0;
+		    						sscanf(nombres[k].c_str(), "%f", &numFloat); //Passa la cadena a un float
+		    						numInt.push_back((int) numFloat); //El passo a integer
+		    						StrokesMatrix.push_back(numInt);
+		    						printf("%i->", (int)numFloat);
+		    					}
 	    					}
 	    				}
-	    				
+	    				printf("\n");
 	    			}else{
 	    				//significa que comença una nova stroke
 	    				i++;
@@ -69,8 +75,8 @@ int main (int argc, char *argv[]){
 	    	t++;
 	    }
 	    for(int z=0; z <StrokesMatrix.size(); z++){
-	    	for(int w=0; w<StrokesMatrix[z].size(); w++){
-	    		printf("%i \n", StrokesMatrix[z][w]);
+	    	for(int w=0; w<StrokesMatrix[z].size(); w+=2){
+	    		printf("%i %i\n", StrokesMatrix[z][w],StrokesMatrix[z][w+1]);
 	    	}	
 	    }
     	fitxer.close();
