@@ -12,6 +12,7 @@ using namespace boost;
 
 int main (int argc, char *argv[]){
 	vector< vector<int> > StrokesMatrix;
+	vector <int> numInt;
 	//Miro que m'hagin pasat un argument que es la imatge necessaria per fer funcionar el autotrace
 	/*std::string file;
 	if(argc!=2) {
@@ -41,7 +42,7 @@ int main (int argc, char *argv[]){
   		int i=0,j=0,t=0;
 	    while (getline (fitxer,linia)){
 	    	if(t>=23){
-	    		if (linia.find("k") == std::string::npos || linia.find("u") == std::string::npos || linia.find("EOF") == std::string::npos){
+	    		if ((linia.find("K") == std::string::npos) && (linia.find("k") == std::string::npos) && (linia.find("U") == std::string::npos) && (linia.find("Trailer") == std::string::npos) && (linia.find("u") == std::string::npos) && (linia.find("EOF") == std::string::npos)){
 	    			//Ignoro les linies que no son de punts.
 	    			if(linia.find("S") == std::string::npos){
 	    				//Si no hi ha una S significa que son punts
@@ -50,31 +51,34 @@ int main (int argc, char *argv[]){
 	    				printf(linia.c_str());
 	    				printf("\n");
 	    				split(nombres, linia, is_any_of("   "));
-	    				vector <int> numInt;
 	    				for(int k=0; k< nombres.size(); k++){
 	    					if(nombres[k] != "m" && nombres[k] != "l" && nombres[k] != "c"){
 	    						printf(nombres[k].c_str());
-	    						printf("-");
+	    						
 	    						//si no es cap lletra es que es un numero, el passo a float per no perdre els desimals
 	    						if(!nombres[k].compare("") == 0){
+	    							printf("-");
 		    						float numFloat = 0;
 		    						sscanf(nombres[k].c_str(), "%f", &numFloat); //Passa la cadena a un float
 		    						numInt.push_back((int) numFloat); //El passo a integer
-		    						StrokesMatrix.push_back(numInt);
 		    						printf("%i->", (int)numFloat);
 		    					}
 	    					}
 	    				}
+	    				
 	    				printf("\n");
 	    			}else{
 	    				//significa que comença una nova stroke
+	    				StrokesMatrix.push_back(numInt);
 	    				i++;
 	    			}
 				}
 	    	}	
 	    	t++;
 	    }
+	    printf("%i\n",StrokesMatrix.size());
 	    for(int z=0; z <StrokesMatrix.size(); z++){
+	    	printf("%i\n",StrokesMatrix[z].size()/2);
 	    	for(int w=0; w<StrokesMatrix[z].size(); w+=2){
 	    		printf("%i %i\n", StrokesMatrix[z][w],StrokesMatrix[z][w+1]);
 	    	}	
