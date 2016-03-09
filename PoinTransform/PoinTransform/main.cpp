@@ -6,9 +6,13 @@
 #include <vector>
 #include <string>
 #include <boost/algorithm/string.hpp>
+#include <sstream> 
 
 using namespace std;
 using namespace boost;
+
+// declaración de prototipo
+int arrodonirFloat(float numf);
 
 int main (int argc, char *argv[]){
 	vector< vector<int> > StrokesMatrix;
@@ -60,7 +64,7 @@ int main (int argc, char *argv[]){
 	    							printf("-");
 		    						float numFloat = 0;
 		    						sscanf(nombres[k].c_str(), "%f", &numFloat); //Passa la cadena a un float
-		    						numInt.push_back((int) numFloat); //El passo a integer
+		    						numInt.push_back(arrodonirFloat(numFloat)); //El passo a integer
 		    						printf("%i->", (int)numFloat);
 		    					}
 	    					}
@@ -70,12 +74,15 @@ int main (int argc, char *argv[]){
 	    			}else{
 	    				//significa que comença una nova stroke
 	    				StrokesMatrix.push_back(numInt);
+	    				numInt.clear();
 	    				i++;
 	    			}
 				}
 	    	}	
 	    	t++;
 	    }
+	    fitxer.close();
+	    
 	    printf("%i\n",StrokesMatrix.size());
 	    for(int z=0; z <StrokesMatrix.size(); z++){
 	    	printf("%i\n",StrokesMatrix[z].size()/2);
@@ -83,9 +90,41 @@ int main (int argc, char *argv[]){
 	    		printf("%i %i\n", StrokesMatrix[z][w],StrokesMatrix[z][w+1]);
 	    	}	
 	    }
-    	fitxer.close();
+	    std::stringstream stream;  
+		std::string strNum; 
+ 
+	    ofstream fitxerEntrada ("exp3.scgink");
+  		if (fitxerEntrada.is_open()){
+  			fitxerEntrada << "SCG_INK\n";
+  			stream << StrokesMatrix.size();
+	    	strNum = stream.str();
+	    	stream.str("");
+  			fitxerEntrada << strNum + "\n";
+	    	for(int z=0; z <StrokesMatrix.size(); z++){
+	    		stream << StrokesMatrix[z].size()/2;
+	    		strNum = stream.str();
+	    		stream.str("");
+	    		fitxerEntrada << strNum + "\n";
+	    		for(int w=0; w<StrokesMatrix[z].size(); w+=2){
+	    			stream << StrokesMatrix[z][w];
+	    			strNum = stream.str() + " ";
+	    			stream.str("");
+	    			stream << StrokesMatrix[z][w+1];
+	    			strNum += stream.str();
+	    			stream.str("");
+	    			fitxerEntrada << strNum + "\n";
+	    		}
+	    	}
+   	 		fitxerEntrada.close();
+  		}else cout << "Unable to open file";
+    	
   	}else printf("Imposible obrir el fitxer");
 	
 	return 0;
 }
 
+int arrodonirFloat(float numf){
+	int numAux = (int) numf;
+	if(numf-numAux > 0.5)numAux++;
+	return numAux;
+}
