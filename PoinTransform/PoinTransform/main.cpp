@@ -83,7 +83,7 @@ int main (int argc, char *argv[]){
 	    }
 	    fitxer.close();
 	    
-	    printf("%i\n",StrokesMatrix.size());
+	   /* printf("%i\n",StrokesMatrix.size());
 	    for(int z=0; z <StrokesMatrix.size(); z++){
 	    	printf("%i\n",StrokesMatrix[z].size()/2);
 	    	for(int w=0; w<StrokesMatrix[z].size(); w+=2){
@@ -94,6 +94,11 @@ int main (int argc, char *argv[]){
 		std::string strNum; 
  
 	    ofstream fitxerEntrada ("exp3.scgink");
+	    }*/
+	    std::stringstream stream;  
+		std::string strNum; 
+ 
+	    ofstream fitxerEntrada ("../../../../seshat/SampleMathExps/exp3.scgink");
   		if (fitxerEntrada.is_open()){
   			fitxerEntrada << "SCG_INK\n";
   			stream << StrokesMatrix.size();
